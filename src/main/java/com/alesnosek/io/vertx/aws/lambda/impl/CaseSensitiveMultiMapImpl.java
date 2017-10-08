@@ -14,7 +14,7 @@
  * You may elect to redistribute this code under either of these licenses.
  */
 
-package com.alesnosek;
+package com.alesnosek.io.vertx.aws.lambda.impl;
 
 import java.util.Iterator;
 import java.util.LinkedList;

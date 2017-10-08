@@ -1,4 +1,4 @@
-package com.alesnosek;
+package com.alesnosek.io.vertx.aws.lambda.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;

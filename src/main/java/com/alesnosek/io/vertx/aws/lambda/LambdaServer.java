@@ -1,9 +1,11 @@
-package com.alesnosek;
+package com.alesnosek.io.vertx.aws.lambda;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.alesnosek.io.vertx.aws.lambda.impl.HttpServerRequestImpl;
+import com.alesnosek.io.vertx.aws.lambda.impl.HttpServerResponseImpl;
 import com.amazonaws.services.lambda.runtime.Context;
 
 import io.vertx.core.AsyncResult;

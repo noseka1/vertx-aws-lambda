@@ -1,4 +1,4 @@
-package com.alesnosek;
+package com.alesnosek.io.vertx.aws.lambda.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -311,7 +311,7 @@ public class HttpServerRequestImpl implements HttpServerRequest {
         return null;
     }
 
-    void handleData() {
+    public void handleData() {
         Buffer data = null;
         if (request.getBoolean("isBase64Encoded")) {
             byte[] body = request.getBinary("body");
@@ -330,7 +330,7 @@ public class HttpServerRequestImpl implements HttpServerRequest {
         }
     }
 
-    void handleEnd() {
+    public void handleEnd() {
         ended = true;
         if (endHandler != null) {
             endHandler.handle(null);

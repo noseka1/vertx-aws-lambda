@@ -1,4 +1,4 @@
-package com.alesnosek;
+package com.alesnosek.io.vertx.aws.lambda;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -7,6 +7,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.alesnosek.io.vertx.aws.lambda.LambdaServer;
 
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
