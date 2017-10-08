@@ -118,7 +118,11 @@ public class HttpServerRequestImpl implements HttpServerRequest {
     @Override
     public String uri() {
         if (uri == null) {
-            uri = scheme() + "://" + host() + path() + "?" + query();
+            String path = path().equals("/") ? "" : path();
+            uri = scheme() + "://" + host() + ":" + localPort + path;
+            if (query().length() > 0) {
+                uri = uri + "?" + query();
+            };
         }
         return uri;
     }
@@ -132,18 +136,13 @@ public class HttpServerRequestImpl implements HttpServerRequest {
     public String query() {
         if (query == null) {
             StringBuilder queryBuilder = new StringBuilder();
-            JsonObject queryParams = request.getJsonObject("queryStringParameters");
-            for (Map.Entry<String, Object> param : queryParams) {
-                try {
-                    if (queryBuilder.length() > 0) {
-                        queryBuilder.append("&");
-                    }
-                    queryBuilder.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                    queryBuilder.append("=");
-                    queryBuilder.append(URLEncoder.encode(param.getValue().toString(), "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    LOGGER.error("Failed to encode query parameter " + param.getKey(), e);
+            for (Map.Entry<String, String> param : params()) {
+                if (queryBuilder.length() > 0) {
+                    queryBuilder.append("&");
                 }
+                queryBuilder.append(urlEncode(param.getKey()));
+                queryBuilder.append("=");
+                queryBuilder.append(urlEncode(param.getValue()));
             }
             query = queryBuilder.toString();
         }
@@ -164,26 +163,35 @@ public class HttpServerRequestImpl implements HttpServerRequest {
     public MultiMap headers() {
         if (headers == null) {
             headers = MultiMap.caseInsensitiveMultiMap();
+            JsonObject requestHeaders = request.getJsonObject("headers");
+            if (requestHeaders != null) {
+                for (Map.Entry<String, Object> entry : requestHeaders) {
+                    headers.add(entry.getKey(), entry.getValue().toString());
+                }
+            }
         }
         return headers;
     }
 
     @Override
     public String getHeader(String headerName) {
-        return request.getJsonObject("headers").getString(headerName);
+        return headers().get(headerName);
     }
 
     @Override
     public String getHeader(CharSequence headerName) {
-        return request.getJsonObject("headers").getString(headerName.toString());
+        return headers().get(headerName.toString());
     }
 
     @Override
     public MultiMap params() {
         if (params == null) {
             params = new CaseSensitiveMultiMapImpl();
-            for (Map.Entry<String, Object> entry : request.getJsonObject("queryStringParameters")) {
-                params.add(entry.getKey(), entry.getValue().toString());
+            JsonObject queryParams = request.getJsonObject("queryStringParameters");
+            if (queryParams != null) {
+                for (Map.Entry<String, Object> entry : queryParams) {
+                    params.add(entry.getKey(), entry.getValue().toString());
+                }
             }
         }
         return params;
@@ -333,5 +341,15 @@ public class HttpServerRequestImpl implements HttpServerRequest {
         if (ended) {
             throw new IllegalStateException("Request has already been read");
         }
+    }
+
+    private String urlEncode(String param) {
+        String res = "";
+        try {
+            res = URLEncoder.encode(param, "UTF-8").replaceAll("\\+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("Failed to encode query parameter " + param, e);
+        }
+        return res;
     }
 }
