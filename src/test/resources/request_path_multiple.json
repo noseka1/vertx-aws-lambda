@@ -1,0 +1,12 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/path1/path2/path3",
+  "httpMethod": "GET",
+  "headers": null,
+  "queryStringParameters": null,
+  "pathParameters": {
+    "proxy": "path1/path2/path3"
+  },
+  "body": null,
+  "isBase64Encoded": false
+}

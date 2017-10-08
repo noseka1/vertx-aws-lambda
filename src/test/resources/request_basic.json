@@ -1,0 +1,16 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/",
+  "httpMethod": "POST",
+  "headers": {
+    "X-H1": "val1"
+  },
+  "queryStringParameters": {
+    "p1": "1",
+    "p2": "2"
+  },
+  "pathParameters": null,
+  "stageVariables": null,
+  "body": null,
+  "isBase64Encoded": false
+}

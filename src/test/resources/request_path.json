@@ -1,0 +1,12 @@
+{
+  "resource": "/{proxy+}",
+  "path": "/path1",
+  "httpMethod": "DELETE",
+  "headers": null,
+  "queryStringParameters": null,
+  "pathParameters": {
+    "proxy": "path1"
+  },
+  "body": "request line 1\nrequest line 2\nrequest line 3",
+  "isBase64Encoded": false
+}
