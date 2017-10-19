@@ -1,6 +1,6 @@
 ## AWS Lambda adapter for Vert.x web applications
 
-This adapter allows you to run a [Vert.x](http://vertx.io/) web application as a Lambda function on AWS. [LambdaServer](vertx-aws-lambda/src/main/java/com/alesnosek/io/vertx/aws/lambda/LambdaServer.java) class is provided which implements *io.vertx.core.http.HttpServer* interface. This LambdaServer is a replacement for the Netty-based HttpServer that is built into Vert.x. The LambdaServer translates an incoming Lambda event into the HttpServerRequest which is then processed by the callbacks you have registered. The resulting HttpServerResponse is handed back to the Lambda runtime. Checkout the [sample application](vertx-aws-lambda-sample-app) to get a better idea about how it works.
+This adapter allows you to run a [Vert.x](http://vertx.io/) web application as a Lambda function on AWS. [LambdaServer](vertx-aws-lambda/src/main/java/com/alesnosek/io/vertx/aws/lambda/LambdaServer.java) class is provided which implements *io.vertx.core.http.HttpServer* interface. This LambdaServer is a replacement for the Netty-based HttpServer that is built into Vert.x. LambdaServer translates an incoming Lambda event into the HttpServerRequest which is then processed by the callbacks you have registered. The resulting HttpServerResponse is handed back to the Lambda runtime. Checkout the [sample application](vertx-aws-lambda-sample-app) to get a better idea about how it works.
 
 You can build this adapter along with the sample application by issuing:
 
